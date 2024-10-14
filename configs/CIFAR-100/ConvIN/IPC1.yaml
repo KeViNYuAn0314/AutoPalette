@@ -1,0 +1,35 @@
+dataset: CIFAR100
+model: ConvNet
+device: [0, 1]
+
+ipc: 1
+syn_steps: 60
+expert_epochs: 2
+zca: True
+lr_img: 1000
+lr_teacher: 0.01
+buffer_path: /home/uqbyuan3/data_distillation/data/buffers_sam
+data_path: /home/uqbyuan3/uqbyuan3/data-distillation/DD_High_Low_Freq/data
+ema_decay: 0.9995
+Iteration: 10000
+batch_syn: 200
+
+# wandb
+project: DATM_quant_CIFAR100
+
+num_eval: 3
+eval_it: 500
+skip_first_eva: True
+
+lr_y: 10.0
+Momentum_y: 0.9
+threshold: 1.2
+pix_init: graphcut
+expansion_end_epoch: 2000
+batch_train: 128
+min_start_epoch: 0
+current_max_start_epoch: 10
+max_start_epoch: 25
+lr_lr: 0.00001
+
+

@@ -1,0 +1,36 @@
+dataset: CIFAR100
+device: [0,1]
+
+ipc: 10
+syn_steps: 50
+expert_epochs: 2
+
+lr_img: 1000
+lr_teacher: 0.01
+buffer_path: /home/uqbyuan3/data_distillation/data/buffers_sam
+data_path: /home/uqbyuan3/uqbyuan3/data-distillation/DD_High_Low_Freq/data
+ema_decay: 0.9995
+Iteration: 15000
+# batch_syn: 500
+
+# wandb
+project: DATM_quant_CIFAR100
+
+num_eval: 1
+eval_it: 500
+skip_first_eva: True
+
+lr_y: 10.0
+Momentum_y: 0.9
+threshold: 1.5
+pix_init: graphcut
+Sequential_Generation: False
+batch_train: 128
+min_start_epoch: 0
+current_max_start_epoch: 15
+expansion_end_epoch: 3000
+max_start_epoch: 70
+lr_lr: 0.00001
+zca: True
+
+batch_syn: 600
