@@ -34,7 +34,7 @@ initialization strategy to minimize redundancy among images.
 
 
 ### Image Initialization
-Run the command below and a initialization checkpoint will be saved:
+Run the command below and an initialization checkpoint will be saved:
 
 ```bash
 cd selection
