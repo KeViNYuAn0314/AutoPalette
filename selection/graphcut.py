@@ -1,7 +1,6 @@
 
 import numpy as np
 import torch
-# from ..nets.nets_utils import MyDataParallel
 from copy import deepcopy
 import torch.nn as nn
 
@@ -170,16 +169,6 @@ class EarlyTrain(CoresetMethod):
         self.torchvision_pretrain = torchvision_pretrain
         self.if_dst_pretrain = (len(self.dst_pretrain_dict) != 0)
 
-        # if torchvision_pretrain:
-        #     # Pretrained models in torchvision only accept 224*224 inputs, therefore we resize current
-        #     # datasets to 224*224.
-        #     if args.im_size[0] != 224 or args.im_size[1] != 224:
-        #         self.dst_train = deepcopy(dst_train)
-        #         self.dst_train.transform = transforms.Compose([self.dst_train.transform, transforms.Resize(224)])
-        #         if self.if_dst_pretrain:
-        #             self.dst_pretrain_dict['dst_train'] = deepcopy(dst_pretrain_dict['dst_train'])
-        #             self.dst_pretrain_dict['dst_train'].transform = transforms.Compose(
-        #                 [self.dst_pretrain_dict['dst_train'].transform, transforms.Resize(224)])
         if self.if_dst_pretrain:
             self.n_pretrain = len(self.dst_pretrain_dict['dst_train'])
         self.n_pretrain_size = round(
@@ -226,21 +215,7 @@ class EarlyTrain(CoresetMethod):
         np.random.seed(self.random_seed)
         self.train_indx = np.arange(self.n_train)
 
-        # Setup model and loss
-        # self.model = nets.__dict__[self.args.model if self.specific_model is None else self.specific_model](
-        #     self.args.channel, self.dst_pretrain_dict["num_classes"] if self.if_dst_pretrain else self.num_classes,
-        #     pretrained=self.torchvision_pretrain,
-        #     im_size=(224, 224) if self.torchvision_pretrain else self.args.im_size).to(self.args.device)
         self.model = get_network(self.args.model, channel=self.args.channel, num_classes=self.args.num_classes, im_size=self.args.im_size, dist=False).to(self.args.device)
-
-        # if self.args.device == "cpu":
-        #     print("Using CPU.")
-        # elif self.args.gpu is not None:
-        #     torch.cuda.set_device(self.args.gpu[0])
-        #     # self.model = nets.nets_utils.MyDataParallel(self.model, device_ids=self.args.gpu)
-        #     self.model = get_network(self.model, channel=self.args.channel, num_classes=self.args.num_classes, im_size=self.args.im_size, )
-        # elif torch.cuda.device_count() > 1:
-        #     self.model = nets.nets_utils.MyDataParallel(self.model).cuda()
 
         self.criterion = nn.CrossEntropyLoss().to(self.args.device)
         self.criterion.__init__()
